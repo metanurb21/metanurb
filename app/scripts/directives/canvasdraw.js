@@ -7,7 +7,7 @@
  * # canvasDraw
  */
 angular.module('metanurbApp')
-    .directive('canvasDraw', ['$window', '$timeout', function($window, $timeout) {
+    .directive('canvasDraw', ['$window', '$timeout', 'd3', function($window, $timeout, d3) {
         return {
             template: '<div></div>',
             drawingParams: '=',
@@ -18,43 +18,13 @@ angular.module('metanurbApp')
             link: function postLink(scope, element, attrs) {
                 element.text('');
 
-                var grid = angular.element("#grid")[0];
-                var gridCtx = grid.getContext('2d');
-
-                var canvas = angular.element('<canvas width="768" height="768" class="canvas-draw"></canvas>');
-                element.append(canvas);
-
-                var ui = angular.element("#ui");
-                var undoButton = angular.element('<button type="button" class="btn btn-link undoBtn"><i class="fa fa-undo"></i></button>');
-                ui.append(undoButton);
-
-                var trashButton = angular.element('<button type="button" class="btn btn-link trash"><i class="fa fa-trash"></i></button>');
-                ui.append(trashButton);
-
-                var paper = canvas[0];
-
-                var ctx = paper.getContext('2d');
-                var drawing = false;
                 var drawingWidth = 768; // jshint ignore:line
                 var drawingHeight = 768; // jshint ignore:line
-                var drawingCenterX = drawingWidth / 2;
-                var drawingCenterY = drawingHeight / 2;
-                var drawingData = []; // jshint ignore:line
-                var drawingDataHistory = []; // jshint ignore:line
-                scope.slices = 4;
-                scope.divisions = scope.slices * 2;
-                var divider = 360 / scope.slices;
-                var angle = Math.PI * 2 / scope.divisions;
-                var timer; // jshint ignore:line
-                scope.connect = false;
-                // Make grid
-                for (var i = 0; i < scope.divisions; i++) {
-                    drawSegment(i);
-                }
-
-                scope.bgFill = false;
 
                 var isMobile = {
+                    Kindle: function() {
+                        return navigator.userAgent.match(/Silk/i);
+                    },
                     Android: function() {
                         return navigator.userAgent.match(/Android/i);
                     },
@@ -71,12 +41,73 @@ angular.module('metanurbApp')
                         return navigator.userAgent.match(/IEMobile/i);
                     },
                     any: function() {
-                        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+                        return (isMobile.Kindle() || isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
                     }
                 };
+
+                // console.log(navigator.userAgent);
+
                 var mobile = isMobile.any();
 
+                if (mobile) {
+                    if ($window.innerWidth > $window.innerHeight) {
+                        drawingHeight = $window.innerHeight - 30;
+                    } else {
+                        drawingHeight = $window.innerWidth;
+                    }
+                    drawingWidth = drawingHeight;
+                    console.log(mobile);
+                }
 
+                angular.element($window).bind('resize', function() {
+                    if ($window.innerWidth > $window.innerHeight) {
+                        drawingHeight = $window.innerHeight - 30;
+                    } else {
+                        drawingHeight = $window.innerWidth;
+                    }
+                    drawingWidth = drawingHeight;
+                    scope.$digest();
+                });
+
+                var grd = angular.element("#grid");
+                grd.attr('width', drawingWidth);
+                grd.attr('height', drawingHeight);
+
+                var grid = grd[0];
+                var gridCtx = grid.getContext('2d');
+
+                var canvas = angular.element('<canvas width="' + drawingWidth + '" height="' + drawingHeight + '" class="canvas-draw"></canvas>');
+                element.append(canvas);
+
+
+                var ui = angular.element("#ui");
+                var undoButton = angular.element('<button type="button" class="btn btn-link undoBtn"><i class="fa fa-undo"></i></button>');
+                ui.append(undoButton);
+
+                var trashButton = angular.element('<button type="button" class="btn btn-link trash"><i class="fa fa-trash"></i></button>');
+                ui.append(trashButton);
+
+                var paper = canvas[0];
+                var ctx = paper.getContext('2d');
+
+                var drawing = false;
+
+                var drawingCenterX = drawingWidth / 2;
+                var drawingCenterY = drawingHeight / 2;
+                var drawingData = []; // jshint ignore:line
+                var drawingDataHistory = []; // jshint ignore:line
+                scope.slices = 4;
+                scope.divisions = scope.slices * 2;
+                var divider = 360 / scope.slices;
+                var angle = Math.PI * 2 / scope.divisions;
+                var timer; // jshint ignore:line
+                scope.connect = false;
+                // Make grid
+                for (var i = 0; i < scope.divisions; i++) {
+                    drawSegment(i);
+                }
+
+                scope.bgFill = false;
 
 
                 // Watch for Model changes from the UI
@@ -95,6 +126,11 @@ angular.module('metanurbApp')
                         }
                     }
                     ctx.lineWidth = newVal.lineWidth;
+                    if (newVal.dash !== oldVal.dash) {
+                        var val1 = newVal.dash;
+                        var val2 = newVal.dash * 4;
+                        scope.setLineDash(val1, val2);
+                    }
                     if (newVal.slices !== oldVal.slices) {
                         scope.slices = newVal.slices;
                         setDivider();
@@ -150,6 +186,9 @@ angular.module('metanurbApp')
                         coords[0] = (Math.sin(rot + rotation + i * angle) * dist) + drawingCenterX;
                         coords[1] = (Math.cos(rot + rotation + i * angle) * dist) + drawingCenterY;
                     }
+
+
+
                     return coords;
                 }
 
@@ -242,6 +281,7 @@ angular.module('metanurbApp')
                         drawingDataHistory[i].color.push(null);
                     }
                     // console.log(drawingDataHistory);
+
                 });
 
                 function draw(data) {
@@ -250,6 +290,9 @@ angular.module('metanurbApp')
                     // line from
                     ctx.moveTo(data.lines.lastPoints[0], data.lines.lastPoints[1]);
                     // to
+                    // ctx.bezierCurveTo(data.lines.currPoints[0], data.lines.currPoints[1], 
+                    //     data.lines.currPoints[0] - 100, data.lines.currPoints[1], 
+                    //     data.lines.lastPoints[0], data.lines.lastPoints[1]);
                     ctx.lineTo(data.lines.currPoints[0], data.lines.currPoints[1]);
                     // color
                     ctx.strokeStyle = scope.drawingParams.activeColor; // data.lines.color;
@@ -379,6 +422,10 @@ angular.module('metanurbApp')
                     scope.reset();
                 });
 
+                scope.setLineDash = function(val1, val2) {
+                    ctx.setLineDash([val1, val2]);
+                };
+
                 scope.save = function() {
                     var a = document.createElement("a");
                     a.download = "symmetry.png";
@@ -391,6 +438,25 @@ angular.module('metanurbApp')
                         window.open(a.href);
                     }
                 };
+
+                // d3
+                d3.then(function(d3) {
+                    var renderLine;
+                    var svg = angular.element("#svg");
+                    var paper1 = d3.select(svg[0]) // jshint ignore:line
+                        .append('svg')
+                        .attr('width', drawingWidth * 2)
+                        .attr('height', drawingHeight * 2)
+                        .attr('class', 'paper1')
+                        .attr('id', 'paper1');
+
+                    // Main drawing code
+                    renderLine = d3.svg.line().x(function(d) {
+                        return d[0];
+                    }).y(function(d) {
+                        return d[1];
+                    }).interpolate('basis');
+                });
 
             }
         };

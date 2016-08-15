@@ -15,8 +15,15 @@ angular.module('metanurbApp')
         });
 
         $scope.slider = {
-            value: 1,
+            value: 2,
             min: 1,
+            max: 5,
+            step: 1
+        };
+
+        $scope.dashSlider = {
+            value: 0,
+            min: 0,
             max: 5,
             step: 1
         };
@@ -27,12 +34,13 @@ angular.module('metanurbApp')
             bgFill: false,
             lineWidth: 2,
             slices: 4,
-            connect: false
+            connect: false,
+            dash: 0
         };
 
-        $scope.setDivider = function(val) {
-            $scope.drawingParams.slices = val;
-        };
+        // $scope.setDivider = function(val) {
+        //     $scope.drawingParams.slices = val;
+        // };
 
         $scope.reset = {};
         $scope.save = {};
