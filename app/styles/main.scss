@@ -1,0 +1,619 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$fa-font-path: "../bower_components/font-awesome/fonts/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "font-awesome/scss/font-awesome.scss";
+// endbower
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+body {
+    background-color: #000;
+    padding: 0;
+    margin: 0;
+}
+body,html,.row-offcanvas {
+  height:100%;
+}
+
+.container {
+    color: #DCDEE8;
+}
+
+small {
+    color: #DCDEE8;
+}
+
+/*Responsive sidebar*/
+
+#sidebar {
+    width: inherit;
+    min-width: 220px;
+    max-width: 220px;
+    float: left;
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color:#2E3437;
+}
+
+#main {
+    height: 900px;
+    overflow: auto;
+}
+
+.canvas-draw {
+    background: none;
+    cursor: crosshair;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.comp-canvas {
+    background: #fff;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    cursor: crosshair;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    background: none;
+}
+
+.grid2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    background: #fff;
+}
+
+.svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: crosshair;
+    margin: 0 auto;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    pointer-events: none;
+    background: none;
+}
+
+.canvas-toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 30px;
+    /*overflow: hidden;*/
+    background: none;
+}
+
+.trash {
+    float: right;
+    font-size: 2em;
+    margin-right: 30px;
+}
+
+.undoBtn {
+    font-size: 2em;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+    transition-property: transform;
+    transition-duration: 1s;
+}
+
+.undoBtn.spin {
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: rotate;
+    -moz-animation-duration: 2s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: rotate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(360deg);
+    }
+    to {
+        -webkit-transform: rotate(0deg);
+    }
+}
+
+@-moz-keyframes rotate {
+    from {
+        -moz-transform: rotate(360deg);
+    }
+    to {
+        -moz-transform: rotate(0deg);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.inactive {
+    display: none;
+}
+
+.padding-0 {
+    padding: 0;
+}
+
+.margin-0 {
+    margin: 0;
+}
+
+.ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.paper {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    cursor: crosshair;
+    margin: 0 auto;
+    width: 800px;
+    height: 800px;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    background: none;
+}
+
+.interpolations {}
+
+.buttons {
+    vertical-align: top;
+}
+
+.btn-white {
+    color: #000;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.btn-black {
+    color: #fff;
+    background-color: #000;
+    border-color: #fff;
+}
+
+.swatch {
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.swatch.active {
+    stroke-width: 2px;
+    stroke: black;
+    cursor: pointer;
+}
+
+.swatch {
+    cursor: pointer;
+}
+
+.btn-default.it {
+    font-size: .9em;
+    min-width: 50px;
+    max-width: 50px;
+    padding: 0;
+}
+
+.btn.fa {
+    pointer-events: all;
+    font-family: FontAwesome;
+    fill: #ccc;
+    font-size: 32px;
+    text-anchor: middle;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn.fa:hover {
+    fill: black;
+    cursor: pointer;
+}
+
+.line {
+    fill: none;
+    stroke-width: 2px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    /*stroke-dasharray: 1, 4;*/
+}
+
+.frame {
+    fill: none;
+    stroke: #000;
+}
+
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis line,
+.axis circle {
+    fill: none;
+    stroke: #777;
+    stroke-dasharray: 1, 4;
+}
+
+.axis:last-of-type circle {
+    stroke: #333;
+    stroke-dasharray: none;
+}
+
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}
+
+.img-btn {
+    cursor: pointer;
+    border: 1px solid #fff;
+}
+
+.img-btn:hover {
+    border: 1px solid #666;
+}
+
+.slot {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.btn:focus,
+.btn:active,
+.btn:hover {
+    outline: none !important;
+}
+
+
+/* Responsive: Portrait tablets and up */
+
+
+/*iPad in portrait & landscape*/
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .slot {
+        display: none;
+    }
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+/*iPad mini in portrait & landscape*/
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+    .slot {
+        display: none;
+    }
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+/*iPad in landscape*/
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: block;
+    }
+}
+
+
+/*iPad in portrait*/
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+        width: calc(100% + 220px);
+    }
+    .row-offcanvas-left {
+        left: -220px;
+    }
+    .row-offcanvas-left.active {
+        left: 0;
+    }
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+    }
+}
+
+
+/*iPhone 6 in portrait & landscape*/
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .interpolations {
+        display: none;
+    }
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+        width: calc(100% + 220px);
+    }
+    .row-offcanvas-left {
+        left: -220px;
+    }
+    .row-offcanvas-left.active {
+        left: 0;
+    }
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+    }
+}
+
+
+/*iPhone 6 in landscape*/
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}
+
+
+/*iPhone 6 in portrait*/
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}
+
+
+/*iPhone 6 Plus in portrait & landscape*/
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+        width: calc(100% + 220px);
+    }
+    .row-offcanvas-left {
+        left: -220px;
+    }
+    .row-offcanvas-left.active {
+        left: 0;
+    }
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+    }
+}
+
+
+/*iPhone 6 Plus in landscape*/
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: landscape) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}
+
+
+/*iPhone 6 Plus in portrait*/
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: portrait) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}
+
+
+/*iPhone 5 & 5S in portrait & landscape*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+        width: calc(100% + 220px);
+    }
+    .row-offcanvas-left {
+        left: -220px;
+    }
+    .row-offcanvas-left.active {
+        left: 0;
+    }
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+    }
+}
+
+
+/*iPhone 5 & 5S in landscape*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}
+
+
+/*iPhone 5 & 5S in portrait*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}
+
+
+/*iPhone 2G-4S in portrait & landscape*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+        width: calc(100% + 220px);
+    }
+    .row-offcanvas-left {
+        left: -220px;
+    }
+    .row-offcanvas-left.active {
+        left: 0;
+    }
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+    }
+}
+
+
+/*iPhone 2G-4S in landscape*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}
+
+
+/*iPhone 2G-4S in portrait*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: portrait) {
+    .slot {
+        display: none;
+    }
+    .interpolations {
+        display: none;
+    }
+}

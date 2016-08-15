@@ -1,0 +1,88 @@
+<!-- <div class="row padding-0 margin-0">
+    <div class="interpolations col-xs-3 col-sm-3 col-lg-3 margin-0" style="background-color:#2E3437">
+        <div id="buttons" class="buttons">
+            <div style="margin:10px 0;">
+                <button type="button" class="btn btn-default btn-block" ng-click="undo()">Undo</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="reset()">Clear Canvas</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="save()">Save</button>
+            </div>
+            <div style="margin:10px 15px;">
+                <ng-farbtastic ng-model="drawingParams.activeColor" id="color-picker">
+                </ng-farbtastic>
+            </div>
+            <div style="margin-top:5px;">
+                <toggle ng-model="drawingParams.bgFill" onstyle="btn-white" offstyle="btn-black" on="white canvas" off="black canvas"></toggle>
+            </div>
+            <div style="margin-top:5px;">
+                <toggle ng-model="drawingParams.connect" onstyle="btn-white" offstyle="btn-black" on="draw" off="connect"></toggle>
+                <span ng-show="drawingParams.connect"><br/><small>To connect, click & hold, drag to location & release.</small></span>
+            </div>
+            <div style="margin-top:5px;">
+                <small>Line Width</small>
+                <br/>
+                <slider ng-model="drawingParams.lineWidth" min="slider.min" step="slider.step" max="slider.max" value="slider.value"></slider>
+            </div>
+            <div style="margin-top:5px;">
+                <small>Divide cricle by</small>
+                <br/>
+                <div>
+                    <input style="width:70px;" type="number" step="1" max="50" min="1" value="4" ng-model="drawingParams.slices" input-number-touch>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-2 col-sm-8 col-lg-8 padding-0 margin-0">
+        <canvas id="grid" width="800" height="800" class="grid2"></canvas>
+        <canvas-draw id="canvas-draw" ng-model="drawingParams" reset="reset"></canvas-draw>
+        <div id="ui" class="canvas-toolbar"></div>
+    </div>
+</div> -->
+<div class="row-offcanvas row-offcanvas-left">
+    <div id="sidebar" class="sidebar-offcanvas">
+        <div class="col-md-12">
+            <div style="margin:10px 0;">
+                <button type="button" class="btn btn-default btn-block" ng-click="undo()">Undo</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="reset()">Clear Canvas</button>
+                <button type="button" class="btn btn-default btn-block" ng-click="save()">Save</button>
+            </div>
+            <div style="margin-top:10px">
+                <ng-farbtastic ng-model="drawingParams.activeColor" id="color-picker">
+                </ng-farbtastic>
+            </div>
+            <div style="margin-top:5px;">
+                <toggle ng-model="drawingParams.bgFill" onstyle="btn-white" offstyle="btn-black" on="white canvas" off="black canvas"></toggle>
+            </div>
+            <div style="margin-top:5px;">
+                <toggle ng-model="drawingParams.connect" onstyle="btn-white" offstyle="btn-black" on="draw" off="connect"></toggle>
+                <span ng-show="drawingParams.connect"><br/><small>To connect, click & hold, drag to location & release.</small></span>
+            </div>
+            <div style="margin-top:5px;">
+                <small>Line Width</small>
+                <br/>
+                <slider ng-model="drawingParams.lineWidth" min="slider.min" step="slider.step" max="slider.max" value="slider.value"></slider>
+            </div>
+            <div style="margin-top:5px;">
+                <small>Divide cricle by</small>
+                <br/>
+                <div>
+                    <input style="width:70px;" type="number" step="1" max="50" min="1" value="4" ng-model="drawingParams.slices" input-number-touch>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="col-md-12">
+            <p class="visible-xs visible-sm">
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="fa fa-chevron-left"></i> Tools</button>
+            </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <canvas id="grid" width="768" height="768" class="grid2"></canvas>
+                    <canvas-draw id="canvas-draw" ng-model="drawingParams" reset="reset"></canvas-draw>
+                    <div id="ui" class="canvas-toolbar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/row-offcanvas -->
